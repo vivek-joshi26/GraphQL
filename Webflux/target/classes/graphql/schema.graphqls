@@ -1,0 +1,47 @@
+
+# Schema similar to @Entity in Hibernate
+type Employee {
+    id : ID!
+    name: String
+    salary: String
+    departmentId: ID!
+}
+
+# Schema similar to @Entity in Hibernate, ID! denotes can't be null
+type Department {
+    id : ID!
+    name : String
+    employees : [Employee]
+}
+
+
+# Similar to get requests
+type Query {
+    employeeByName(employeeName : String) : [Employee]
+    allDepartment: [Department]
+}
+
+# Similar to post requests, to update or post data
+type Mutation {
+    addEmployee(addEmployeeInput : AddEmployeeInput) : Employee
+    updateSalary(updateSalaryInput: UpdateSalaryInput) : Employee
+}
+
+# This is similar to DTOs, to get specific input from the user in the post request body
+input AddEmployeeInput {
+    name: String
+    salary: String
+    departmentId: ID!
+}
+
+# This is similar to DTOs, to get specific input from the user in the post request body
+input UpdateSalaryInput {
+    employeeId: ID!
+    salary: String!
+}
+
+# Subscription is similar to query, they can maintain an active connection to graphQL server and the server can push updated results
+# Useful in - Low-latency, real-time updates. For example, a chat application's client wants to receive new messages as soon as they're available.
+type Subscription {
+    allEmployee: Employee
+}
